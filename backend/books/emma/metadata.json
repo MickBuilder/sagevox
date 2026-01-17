@@ -1,0 +1,41 @@
+{
+  "id": "emma",
+  "title": "Emma",
+  "author": "Jane Austen",
+  "description": "",
+  "narrator_voice": "Kore",
+  "language_code": "en-US",
+  "cover_image": "cover.png",
+  "total_chapters": 4,
+  "total_duration_seconds": 3017.2,
+  "chapters": [
+    {
+      "number": 1,
+      "title": "CHAPTER I",
+      "audio_file": "chapter-01.mp3",
+      "transcript_file": "chapter-01-transcript.json",
+      "duration_seconds": 831.24
+    },
+    {
+      "number": 2,
+      "title": "CHAPTER II",
+      "audio_file": "chapter-02.mp3",
+      "transcript_file": "chapter-02-transcript.json",
+      "duration_seconds": 574.35
+    },
+    {
+      "number": 3,
+      "title": "CHAPTER III",
+      "audio_file": "chapter-03.mp3",
+      "transcript_file": "chapter-03-transcript.json",
+      "duration_seconds": 1010.29
+    },
+    {
+      "number": 4,
+      "title": "CHAPTER IV",
+      "audio_file": "chapter-04.mp3",
+      "transcript_file": "chapter-04-transcript.json",
+      "duration_seconds": 601.31
+    }
+  ]
+}

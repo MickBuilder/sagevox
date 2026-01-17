@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sagevox-backend"
+version = "0.1.0"
+description = "SageVox Backend - WebSocket proxy for Gemini Live API"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [
+    {name = "SageVox Team"}
+]
+dependencies = [
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "google-generativeai>=0.8.3",
+    "python-multipart>=0.0.9",
+    "livekit-api>=1.1.0",
+    "livekit-agents[google,silero,turn-detector]~=1.3",
+    "livekit-plugins-google>=1.3.0",
+    "livekit-plugins-silero>=1.3.0",
+    "livekit-plugins-turn-detector>=1.3.0",
+    "livekit-plugins-noise-cancellation~=0.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "httpx>=0.26.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+]
+prod = [
+    "gunicorn>=21.0.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
