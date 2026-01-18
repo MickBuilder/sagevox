@@ -78,44 +78,39 @@ CORS_ALLOW_ORIGINS=["*"]
 DEBUG=false
 ```
 
-### Step 5: Add Volume for Books
+### Step 5: Add Books (Choose ONE Option)
 
-Since books are stored on disk:
+**Option A: Include books in repo (simplest for small audiobooks)**
+
+Put books in `backend/books/` and commit them:
+
+```bash
+# Books are deployed with your code - no extra config needed
+git add backend/books/
+git commit -m "Add audiobooks"
+git push
+```
+
+The default config automatically finds books at the correct path. **Do NOT create a volume if using this option** - a volume would overlay and hide the deployed books.
+
+**Option B: Use a Volume (for large files or frequent updates)**
 
 1. In Railway dashboard → **+ New** → **Volume**
 2. Mount path: `/app/books`
 3. In Variables, add: `BOOKS_DIR=/app/books`
-
-### Step 6: Upload Books to Volume
-
-Option A: Use Railway CLI
+4. Upload books using Railway CLI:
 
 ```bash
-# Install Railway CLI
 npm install -g @railway/cli
-
-# Login
 railway login
-
-# Link to project
 railway link
 
-# Upload books
-railway run cp -r books/* /app/books/
+# Create a temporary service to copy files, or use railway shell (Pro)
 ```
 
-Option B: SSH into container (Railway Pro)
+⚠️ **Important**: Don't mix options! If you have books in the repo AND a volume mounted at `/app/books`, the empty volume will hide your deployed books.
 
-```bash
-railway shell
-# Then upload via scp or other method
-```
-
-Option C: Add books to repo (simple, not recommended for large files)
-
-Put books in `backend/books/` and they'll deploy with the code.
-
-### Step 7: Deploy Voice Agent
+### Step 6: Deploy Voice Agent
 
 The LiveKit agent needs to run separately. Create a second Railway service:
 
@@ -126,21 +121,29 @@ The LiveKit agent needs to run separately. Create a second Railway service:
    - Start Command: `python agent.py start`
 4. Add same environment variables as the API service
 
-### Step 8: Generate Domain
+### Step 7: Generate Domain
 
 1. Go to API service → **Settings** → **Networking**
 2. Click **"Generate Domain"**
 3. Note your URL: `https://sagevox-backend-xxxx.railway.app`
 
-### Step 9: Verify Deployment
+### Step 8: Verify Deployment
 
 ```bash
 # Health check
 curl https://your-app.railway.app/health
 
+# Debug books directory (shows path and contents)
+curl https://your-app.railway.app/api/books/debug
+
 # List books
 curl https://your-app.railway.app/api/books
 ```
+
+**Troubleshooting**: If `/api/books` returns empty `[]` or the debug endpoint shows `exists: false`:
+- Check if you accidentally created a volume at `/app/books` that's hiding deployed files
+- Verify books are committed: `git ls-files backend/books/`
+- Check Railway logs for "Books directory" messages
 
 ---
 

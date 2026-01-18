@@ -29,6 +29,12 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 
     logger.info(f"Gemini Live Model: {settings.gemini_live_model}")
     logger.info(f"Books directory: {settings.books_dir}")
+    logger.info(f"Books directory exists: {settings.books_dir.exists()}")
+
+    # Log all registered routes for debugging
+    routes = [f"{route.methods} {route.path}" for route in app.routes if hasattr(route, 'methods')]
+    logger.info(f"Registered routes: {routes}")
+
     yield
     logger.info("Shutting down SageVox Backend")
 
